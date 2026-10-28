@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Kokurikuler: Kebiasaan Anak Indonesia Hebat (Sarapan & Jajanan Sehat)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter & Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#10B981',
+                        secondary: '#F59E0B',
+                        accent: '#3B82F6',
+                        danger: '#EF4444',
+                        dark: '#1F2937'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8FAFC;
+        }
+        .hero-pattern {
+            background: linear-gradient(135deg, #059669 0%, #10B981 50%, #34D399 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-dark min-h-screen flex flex-col justify-between">
+
+    <!-- Top Navigation -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg sm:text-xl font-bold text-gray-800 leading-tight">Anak Indonesia Hebat</h1>
+                        <p class="text-xs text-emerald-600 font-semibold">Tema 7: Sarapan & Jajanan Sehat</p>
+                    </div>
+                </div>
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden lg:flex space-x-1">
+                    <button onclick="switchTab('beranda')" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-emerald-700 bg-emerald-50 transition active-tab" data-tab="beranda">Beranda</button>
+                    <button onclick="switchTab('sarapan')" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition" data-tab="sarapan">Sarapan Sehat</button>
+                    <button onclick="switchTab('jajanan')" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition" data-tab="jajanan">Jajanan Sehat</button>
+                    <button onclick="switchTab('bahaya')" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition" data-tab="bahaya">Bahaya & Zat Aditif</button>
+                    <button onclick="switchTab('tugas')" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition" data-tab="tugas">Tugas Rumah</button>
+                    <button onclick="switchTab('game')" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition" data-tab="game">Game Mini</button>
+                    <button onclick="switchTab('kuis')" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-emerald-600 hover:bg-gray-50 transition" data-tab="kuis">Kuis Interaktif</button>
+                    <button onclick="switchTab('kirim')" class="nav-btn px-3 py-2 rounded-xl text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 transition shadow-sm" data-tab="kirim"><i class="fa-brands fa-whatsapp mr-1"></i> Kirim WA & GDrive</button>
+                </nav>
+                <!-- Mobile menu button -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 rounded-lg text-gray-600 hover:text-emerald-600 hover:bg-gray-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-4 space-y-1 shadow-lg">
+            <button onclick="switchTab('beranda'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-emerald-50 hover:text-emerald-600">Beranda</button>
+            <button onclick="switchTab('sarapan'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-emerald-50 hover:text-emerald-600">Sarapan Sehat</button>
+            <button onclick="switchTab('jajanan'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-emerald-50 hover:text-emerald-600">Jajanan Sehat</button>
+            <button onclick="switchTab('bahaya'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-emerald-50 hover:text-emerald-600">Bahaya & Zat Aditif</button>
+            <button onclick="switchTab('tugas'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-emerald-50 hover:text-emerald-600">Tugas Rumah</button>
+            <button onclick="switchTab('game'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-emerald-50 hover:text-emerald-600">Game Mini</button>
+            <button onclick="switchTab('kuis'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-emerald-50 hover:text-emerald-600">Kuis Interaktif</button>
+            <button onclick="switchTab('kirim'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-base font-medium text-white bg-emerald-600 hover:bg-emerald-700"><i class="fa-brands fa-whatsapp mr-1"></i> Kirim WA & GDrive</button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- TAB 1: BERANDA -->
+        <section id="tab-beranda" class="tab-content space-y-8">
+            <!-- Hero Banner -->
+            <div class="hero-pattern rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-15 text-9xl">
+                    <i class="fa-solid fa-bowl-food"></i>
+                </div>
+                <div class="max-w-3xl relative z-10 space-y-4">
+                    <span class="bg-white/20 text-white text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-sm">
+                        Kegiatan Kokurikuler • Tema 7
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                        Kebiasaan Anak Indonesia Hebat: Sarapan Bergizi & Jajanan Sehat
+                    </h2>
+                    <p class="text-base sm:text-lg text-emerald-50 font-light leading-relaxed">
+                        Selamat datang adik-adik hebat! Mari belajar bersama tentang pentingnya memulai hari dengan sarapan bergizi, memilih jajanan sekolah yang sehat dan higienis, serta mengenali zat-zat berbahaya yang harus dihindari demi tubuh yang kuat dan cerdas!
+                    </p>
+                    <div class="pt-4 flex flex-wrap gap-4">
+                        <button onclick="switchTab('sarapan')" class="bg-white text-emerald-700 hover:bg-emerald-50 font-bold px-6 py-3 rounded-2xl shadow-lg transition flex items-center space-x-2">
+                            <span>Mulai Belajar</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button onclick="switchTab('game')" class="bg-emerald-700/60 hover:bg-emerald-700 text-white border border-white/30 font-bold px-6 py-3 rounded-2xl shadow-lg transition flex items-center space-x-2 backdrop-blur-sm">
+                            <i class="fa-solid fa-gamepad"></i>
+                            <span>Main Game & Kuis</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Overview Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-3xl shadow-md card-hover border border-gray-100 flex items-start space-x-4">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                        <i class="fa-solid fa-sun"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800">Sarapan Pagi Sehat</h3>
+                        <p class="text-sm text-gray-600 mt-1">Sumber energi utama untuk konsentrasi belajar dan beraktivitas sepanjang hari di sekolah.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-md card-hover border border-gray-100 flex items-start space-x-4">
+                    <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800">Jajanan Higienis</h3>
+                        <p class="text-sm text-gray-600 mt-1">Ciri jajanan sehat bebas kuman, tidak mencolok, bernutrisi seimbang dan aman dikonsumsi.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-md card-hover border border-gray-100 flex items-start space-x-4">
+                    <div class="w-14 h-14 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800">Waspada Zat Berbahaya</h3>
+                        <p class="text-sm text-gray-600 mt-1">Kenali bahaya boraks, formalin, dan pewarna tekstil pada jajanan tidak sehat bagi tubuh.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action GDrive & WhatsApp Info -->
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-2 text-center md:text-left">
+                    <div class="inline-block bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">Informasi Dokumen & Tugas</div>
+                    <h4 class="text-xl font-bold text-gray-900">Folder Google Drive & Pelaporan Guru</h4>
+                    <p class="text-sm text-gray-600 max-w-xl">Semua lembar kerja, materi panduan lengkap, dan dokumentasi tugas dapat diakses melalui tautan Google Drive kelas.</p>
+                </div>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <a href="https://drive.google.com/drive/u/4/folders/1PjoHYijJQ2Gw5b4SHEdJhEwZ2g1X5leT?usp=sharing" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-3 rounded-2xl shadow transition flex items-center space-x-2">
+                        <i class="fa-brands fa-google-drive"></i>
+                        <span>Buka Google Drive</span>
+                    </a>
+                    <button onclick="switchTab('kirim')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-3 rounded-2xl shadow transition flex items-center space-x-2">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <span>Kirim Tugas via WA</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SARAPAN SEHAT (Materi 1) -->
+        <section id="tab-sarapan" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border border-gray-100 space-y-6">
+                <div class="border-b border-gray-100 pb-4">
+                    <span class="text-xs font-bold text-emerald-600 tracking-wider uppercase">Materi 1</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">Sarapan Sehat & Bergizi Seimbang</h2>
+                    <p class="text-sm text-gray-500 mt-1">Mengapa sarapan itu penting sebelum memulai hari di sekolah?</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold text-gray-800 flex items-center space-x-2">
+                            <i class="fa-solid fa-heart-pulse text-rose-500"></i>
+                            <span>Manfaat Utama Sarapan Pagi</span>
+                        </h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start space-x-3 bg-emerald-50/60 p-3 rounded-2xl">
+                                <i class="fa-solid fa-circle-check text-emerald-600 mt-1"></i>
+                                <span class="text-sm text-gray-700"><strong>Memberi Energi Tubuh:</strong> Mengembalikan kadar gula darah setelah tidur malam agar tubuh bertenaga.</span>
+                            </li>
+                            <li class="flex items-start space-x-3 bg-emerald-50/60 p-3 rounded-2xl">
+                                <i class="fa-solid fa-circle-check text-emerald-600 mt-1"></i>
+                                <span class="text-sm text-gray-700"><strong>Meningkatkan Konsentrasi Belajar:</strong> Otak memerlukan glukosa untuk berpikir, fokus, dan menerima pelajaran dengan baik.</span>
+                            </li>
+                            <li class="flex items-start space-x-3 bg-emerald-50/60 p-3 rounded-2xl">
+                                <i class="fa-solid fa-circle-check text-emerald-600 mt-1"></i>
+                                <span class="text-sm text-gray-700"><strong>Menjaga Berat Badan Ideal:</strong> Mencegah rasa lapar berlebihan di siang hari yang memicu makan berlebih.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-gradient-to-br from-emerald-50 to-amber-50 rounded-3xl p-6 border border-emerald-100 space-y-4">
+                        <h3 class="text-xl font-bold text-gray-800 flex items-center space-x-2">
+                            <i class="fa-solid fa-utensils text-amber-500"></i>
+                            <span>Contoh Menu Sarapan Sehat Indonesia</span>
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-amber-100">
+                                <h4 class="font-bold text-gray-800 text-sm">1. Nasi Tim / Bubur Ayam Sehat</h4>
+                                <p class="text-xs text-gray-600 mt-1">Karbohidrat dari nasi, protein dari suwiran ayam & telur rebus, kuah kaldu bergizi tanpa penyedap berlebih.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-amber-100">
+                                <h4 class="font-bold text-gray-800 text-sm">2. Roti Gandum & Telur Dadar Sayur</h4>
+                                <p class="text-xs text-gray-600 mt-1">Dilengkapi potongan tomat, selada, dan segelas susu hangat segar.</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-amber-100">
+                                <h4 class="font-bold text-gray-800 text-sm">3. Lontong Sayur / Pecel Sehat</h4>
+                                <p class="text-xs text-gray-600 mt-1">Sayuran hijau segar kaya serat, bumbu kacang secukupnya, dan sumber protein nabati (tahu/tempe).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-lightbulb text-amber-500 text-2xl"></i>
+                        <p class="text-xs sm:text-sm text-amber-900 font-medium">Tips: Sarapan ideal sebaiknya dikonsumsi sebelum jam 07.00 pagi dengan komposisi gizi seimbang (Karbohidrat, Protein, Vitamin & Serat).</p>
+                    </div>
+                    <button onclick="switchTab('jajanan')" class="hidden sm:flex items-center space-x-1 text-xs font-bold bg-amber-500 text-white px-4 py-2 rounded-xl hover:bg-amber-600 transition">
+                        <span>Lanjut ke Jajanan Sehat</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: JAJANAN SEHAT (Materi 2) -->
+        <section id="tab-jajanan" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border border-gray-100 space-y-6">
+                <div class="border-b border-gray-100 pb-4">
+                    <span class="text-xs font-bold text-emerald-600 tracking-wider uppercase">Materi 2</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">Jajanan Sehat di Lingkungan Sekolah</h2>
+                    <p class="text-sm text-gray-500 mt-1">Bagaimana cara mengenali jajanan yang higienis, bersih, dan menyehatkan?</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl space-y-3">
+                        <div class="w-12 h-12 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-xl font-bold">1</div>
+                        <h3 class="font-bold text-gray-800 text-lg">Higienis & Tertutup</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed">Makanan terlindung dari debu, lalat, dan kotoran. Wadah penyajian bersih serta penjual menjaga kebersihan tangan dan pakaian.</p>
+                    </div>
+                    <div class="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl space-y-3">
+                        <div class="w-12 h-12 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-xl font-bold">2</div>
+                        <h3 class="font-bold text-gray-800 text-lg">Warna Alami & Wajar</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed">Warna makanan tidak terlalu mencolok atau terlalu terang menyala, karena warna yang terlalu mencolok seringkali menggunakan pewarna non-makanan.</p>
+                    </div>
+                    <div class="bg-emerald-50/50 border border-emerald-100 p-6 rounded-3xl space-y-3">
+                        <div class="w-12 h-12 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-xl font-bold">3</div>
+                        <h3 class="font-bold text-gray-800 text-lg">Bergizi Seimbang</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed">Mengandung karbohidrat, protein (seperti telur, ikan, tahu), serta vitamin dari buah segar atau sayuran yang dimasak matang.</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-3xl p-6 border border-gray-200">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center space-x-2">
+                        <i class="fa-solid fa-basket-shopping text-emerald-600"></i>
+                        <span>Contoh Jajanan Sekolah Sehat Rekomendasi</span>
+                    </h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="bg-white p-4 rounded-2xl text-center shadow-sm border border-gray-100">
+                            <span class="text-3xl">🍲</span>
+                            <h4 class="font-bold text-sm text-gray-800 mt-2">Soto / Sop Ayam</h4>
+                            <p class="text-xs text-gray-500 mt-1">Hangat & kaya nutrisi</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl text-center shadow-sm border border-gray-100">
+                            <span class="text-3xl">🍌</span>
+                            <h4 class="font-bold text-sm text-gray-800 mt-2">Pisang Rebus / Kukus</h4>
+                            <p class="text-xs text-gray-500 mt-1">Sumber energi serat</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl text-center shadow-sm border border-gray-100">
+                            <span class="text-3xl">🫔</span>
+                            <h4 class="font-bold text-sm text-gray-800 mt-2">Kue Talam / Lemper</h4>
+                            <p class="text-xs text-gray-500 mt-1">Jajanan pasar higienis</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl text-center shadow-sm border border-gray-100">
+                            <span class="text-3xl">🍎</span>
+                            <h4 class="font-bold text-sm text-gray-800 mt-2">Potongan Buah Segar</h4>
+                            <p class="text-xs text-gray-500 mt-1">Vitamin & mineral alami</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: BAHAYA & ZAT ADITIF (Materi 3 & 4) -->
+        <section id="tab-bahaya" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border border-gray-100 space-y-6">
+                <div class="border-b border-gray-100 pb-4">
+                    <span class="text-xs font-bold text-rose-600 tracking-wider uppercase">Materi 3 & 4</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">Jajanan Tidak Sehat & Zat Aditif Berbahaya</h2>
+                    <p class="text-sm text-gray-500 mt-1">Kenali ciri jajanan tidak sehat serta bahan kimia berbahaya yang sering disalahgunakan pada makanan.</p>
+                </div>
+
+                <!-- Zat Aditif Berbahaya Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-rose-50 border border-rose-200 rounded-3xl p-6 space-y-3">
+                        <div class="flex items-center space-x-3 text-rose-600">
+                            <i class="fa-solid fa-skull-crossbones text-2xl"></i>
+                            <h3 class="font-bold text-lg text-gray-900">Boraks</h3>
+                        </div>
+                        <p class="text-xs text-gray-700 leading-relaxed">Biasanya disalahgunakan pada bakso, cilok, atau lontong agar sangat kenyal dan tahan lama.</p>
+                        <p class="text-xs text-rose-700 font-semibold">Bahaya: Merusak ginjal, hati, dan saluran pencernaan.</p>
+                    </div>
+
+                    <div class="bg-rose-50 border border-rose-200 rounded-3xl p-6 space-y-3">
+                        <div class="flex items-center space-x-3 text-rose-600">
+                            <i class="fa-solid fa-flask text-2xl"></i>
+                            <h3 class="font-bold text-lg text-gray-900">Formalin</h3>
+                        </div>
+                        <p class="text-xs text-gray-700 leading-relaxed">Cairan pengawet mayat yang disalahgunakan pada tahu, mie basah, atau ikan asin agar tidak cepat busuk.</p>
+                        <p class="text-xs text-rose-700 font-semibold">Bahaya: Menyebabkan iritasi lambung dan karsinogenik (pemicu kanker).</p>
+                    </div>
+
+                    <div class="bg-rose-50 border border-rose-200 rounded-3xl p-6 space-y-3">
+                        <div class="flex items-center space-x-3 text-rose-600">
+                            <i class="fa-solid fa-droplet text-2xl"></i>
+                            <h3 class="font-bold text-lg text-gray-900">Rhodamin B (Pewarna Tekstil)</h3>
+                        </div>
+                        <p class="text-xs text-gray-700 leading-relaxed">Pewarna merah terang untuk kain/kertas yang disalahgunakan pada agar-agar, sirup murah, atau jajanan anak berwarna mencolok.</p>
+                        <p class="text-xs text-rose-700 font-semibold">Bahaya: Gangguan fungsi hati dan memicu kanker.</p>
+                    </div>
+                </div>
+
+                <!-- Materi 5: Dampak dan Risiko -->
+                <div class="bg-amber-50 border border-amber-200 rounded-3xl p-6 sm:p-8 space-y-4">
+                    <h3 class="text-xl font-bold text-gray-900 flex items-center space-x-2">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
+                        <span>Materi 5: Dampak & Risiko Konsumsi Jajanan Tidak Sehat</span>
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-amber-100 flex items-start space-x-3">
+                            <i class="fa-solid fa-viruses text-amber-600 text-lg mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm">Gangguan Pencernaan Akut</h4>
+                                <p class="text-xs text-gray-600 mt-1">Sakit perut, diare, mual, muntah, dan keracunan makanan akibat jajanan tidak higienis atau berjamur.</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-amber-100 flex items-start space-x-3">
+                            <i class="fa-solid fa-bed-pulse text-amber-600 text-lg mt-1"></i>
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-sm">Penurunan Daya Tahan Tubuh</h4>
+                                <p class="text-xs text-gray-600 mt-1">Anak jadi sering sakit, mudah lemas, dan prestasi belajar di sekolah menurun akibat kekurangan gizi seimbang.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: TUGAS RUMAH (Materi 6) -->
+        <section id="tab-tugas" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border border-gray-100 space-y-6">
+                <div class="border-b border-gray-100 pb-4">
+                    <span class="text-xs font-bold text-emerald-600 tracking-wider uppercase">Materi 6 & Tugas Siswa</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">Aktivitas & Lembar Tugas di Rumah</h2>
+                    <p class="text-sm text-gray-500 mt-1">Praktik membuat menu sarapan bersama orang tua dan mencatat daftar jajanan harian.</p>
+                </div>
+
+                <!-- Interactive Task Form -->
+                <div class="bg-emerald-50/60 border border-emerald-200 rounded-3xl p-6 sm:p-8 space-y-6">
+                    <h3 class="text-xl font-bold text-gray-800 flex items-center space-x-2">
+                        <i class="fa-solid fa-clipboard-user text-emerald-600"></i>
+                        <span>Formulir Laporan Tugas Siswa</span>
+                    </h3>
+                    
+                    <form id="task-form" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Lengkap Siswa</label>
+                                <input type="text" id="student-name" required placeholder="Contoh: Budi Pratama" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Kelas & Sekolah</label>
+                                <input type="text" id="student-class" required placeholder="Contoh: Kelas 5 SDN 1 Merdeka" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Menu Sarapan Pagi Ini Bersama Orang Tua</label>
+                                <input type="text" id="task-breakfast" required placeholder="Contoh: Nasi Goreng Telur & Susu Hangat" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Jajanan Sehat yang Dipilih di Sekolah</label>
+                                <input type="text" id="task-snack" required placeholder="Contoh: Potongan Buah Pepaya & Roti Kukus" class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Pesan / Refleksi Belajar Hari Ini</label>
+                            <textarea id="task-reflection" rows="3" required placeholder="Tuliskan pengalaman atau hal baru yang kamu pelajari tentang sarapan bergizi..." class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"></textarea>
+                        </div>
+
+                        <div class="flex flex-wrap gap-3 pt-2">
+                            <button type="button" onclick="saveTaskData()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl shadow transition flex items-center space-x-2">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span>Simpan Laporan Tugas</span>
+                            </button>
+                            <button type="button" onclick="printTaskReport()" class="bg-gray-800 hover:bg-gray-900 text-white font-bold px-6 py-3 rounded-xl shadow transition flex items-center space-x-2">
+                                <i class="fa-solid fa-print"></i>
+                                <span>Cetak / Unduh Laporan</span>
+                            </button>
+                        </div>
+                    </form>
+                    <div id="task-success-msg" class="hidden bg-emerald-100 text-emerald-800 p-4 rounded-xl text-sm font-medium">
+                        <i class="fa-solid fa-circle-check mr-2"></i> Laporan tugas berhasil disimpan! Sekarang kamu bisa mengirimkannya ke WhatsApp guru atau melanjutkan ke Game & Kuis.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: GAME INTERAKTIF -->
+        <section id="tab-game" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border border-gray-100 space-y-6">
+                <div class="border-b border-gray-100 pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-600 tracking-wider uppercase">Game Mini Edukatif</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">Pilih Jajanan: Sehat vs Tidak Sehat</h2>
+                        <p class="text-sm text-gray-500 mt-1">Uji kemampuanmu mengidentifikasi makanan sehat dan jajanan berbahaya!</p>
+                    </div>
+                    <div class="bg-emerald-100 text-emerald-800 px-4 py-2 rounded-2xl font-bold text-sm flex items-center space-x-2 self-start">
+                        <i class="fa-solid fa-trophy text-amber-500"></i>
+                        <span>Skor: <span id="game-score">0</span></span>
+                    </div>
+                </div>
+
+                <!-- Game Arena -->
+                <div id="game-arena" class="space-y-6">
+                    <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-3xl p-6 text-white text-center space-y-3">
+                        <span id="game-item-emoji" class="text-6xl inline-block animate-pulse-slow">🍎</span>
+                        <h3 id="game-item-name" class="text-2xl font-bold">Apel Segar</h3>
+                        <p id="game-item-desc" class="text-xs sm:text-sm text-emerald-100 max-w-md mx-auto">Buah segar kaya vitamin dan serat alami untuk tubuh.</p>
+                    </div>
+
+                    <div class="flex justify-center gap-4">
+                        <button onclick="checkGameAnswer('sehat')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-2xl shadow-lg transition flex items-center space-x-2 text-lg">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>SEHAT</span>
+                        </button>
+                        <button onclick="checkGameAnswer('tidak_sehat')" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-8 py-4 rounded-2xl shadow-lg transition flex items-center space-x-2 text-lg">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                            <span>TIDAK SEHAT</span>
+                        </button>
+                    </div>
+
+                    <div id="game-feedback" class="text-center font-bold text-base min-h-[30px]"></div>
+                </div>
+
+                <!-- Game Completed View -->
+                <div id="game-completed" class="hidden text-center space-y-6 py-8">
+                    <div class="w-20 h-20 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center text-4xl mx-auto shadow-lg">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <h3 class="text-3xl font-extrabold text-gray-800">Hebat! Permainan Selesai</h3>
+                    <p class="text-gray-600 text-sm max-w-md mx-auto">Kamu telah berhasil menguji kemampuan memilih makanan sehat dan menghindari jajanan berbahaya.</p>
+                    <div class="text-xl font-bold text-emerald-600">Skor Akhir Kamu: <span id="final-game-score">0</span> / 50</div>
+                    <button onclick="resetGame()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-2xl shadow transition">
+                        <i class="fa-solid fa-rotate-right mr-2"></i> Main Lagi
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 7: KUIS INTERAKTIF -->
+        <section id="tab-kuis" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border border-gray-100 space-y-6">
+                <div class="border-b border-gray-100 pb-4">
+                    <span class="text-xs font-bold text-emerald-600 tracking-wider uppercase">Evaluasi Kuis</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">Kuis Pilihan Ganda Interaktif</h2>
+                    <p class="text-sm text-gray-500 mt-1">Jawab pertanyaan berikut untuk menguji pemahamanmu seputar sarapan dan jajanan sehat.</p>
+                </div>
+
+                <!-- Quiz Container -->
+                <div id="quiz-container" class="space-y-6">
+                    <div class="flex justify-between items-center text-xs font-bold text-gray-500">
+                        <span>Soal <span id="current-question-num">1</span> dari 5</span>
+                        <span>Nilai: <span id="quiz-live-score">0</span></span>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200 space-y-4">
+                        <h3 id="quiz-question-text" class="text-lg font-bold text-gray-900">Pertanyaan kuis akan muncul di sini...</h3>
+                        <div id="quiz-options" class="grid grid-cols-1 gap-3">
+                            <!-- Options injected by JS -->
+                        </div>
+                    </div>
+
+                    <div id="quiz-explanation" class="hidden p-4 rounded-xl text-xs sm:text-sm font-medium"></div>
+
+                    <div class="flex justify-end">
+                        <button id="next-quiz-btn" onclick="nextQuizQuestion()" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl shadow transition">
+                            <span>Soal Selanjutnya</span> <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Result View -->
+                <div id="quiz-result" class="hidden text-center space-y-6 py-8">
+                    <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-4xl mx-auto shadow-lg">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="text-3xl font-extrabold text-gray-800">Kuis Selesai!</h3>
+                    <p class="text-gray-600 text-sm max-w-md mx-auto">Terima kasih telah menyelesaikan kuis kegiatan kokurikuler Tema 7 dengan sangat baik.</p>
+                    <div class="text-2xl font-bold text-emerald-600">Nilai Akhir Kuis: <span id="final-quiz-score">0</span> / 100</div>
+                    <button onclick="resetQuiz()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-2xl shadow transition">
+                        <i class="fa-solid fa-rotate-right mr-2"></i> Ulangi Kuis
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 8: KIRIM WA & GDRIVE -->
+        <section id="tab-kirim" class="tab-content hidden space-y-8">
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border border-gray-100 space-y-6">
+                <div class="border-b border-gray-100 pb-4">
+                    <span class="text-xs font-bold text-emerald-600 tracking-wider uppercase">Pelaporan & Tautan</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-1">Kirim Tugas ke WhatsApp & Google Drive</h2>
+                    <p class="text-sm text-gray-500 mt-1">Kirimkan ringkasan tugas dan hasil belajarmu langsung ke nomor pembimbing dan akses folder GDrive.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- WhatsApp Sharing Card -->
+                    <div class="bg-emerald-50 border border-emerald-200 rounded-3xl p-6 space-y-4 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">Kirim ke WhatsApp Pembimbing</h3>
+                            <p class="text-xs text-gray-600 leading-relaxed">Format pesan otomatis akan menyusun nama siswa, kelas, menu sarapan, hasil game, dan skor kuis untuk dikirim ke nomor WhatsApp <strong>081373363236</strong>.</p>
+                        </div>
+                        <button onclick="sendToWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 px-6 rounded-2xl shadow transition flex items-center justify-center space-x-2">
+                            <i class="fa-brands fa-whatsapp text-xl"></i>
+                            <span>Kirim ke WA (081373363236)</span>
+                        </button>
+                    </div>
+
+                    <!-- Google Drive Card -->
+                    <div class="bg-blue-50 border border-blue-200 rounded-3xl p-6 space-y-4 flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <div class="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow">
+                                <i class="fa-brands fa-google-drive"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900">Folder Google Drive Kelas</h3>
+                            <p class="text-xs text-gray-600 leading-relaxed">Akses seluruh materi pembelajaran, template lembar kerja, dan arsip tugas kokurikuler Tema 7 di Google Drive resmi.</p>
+                        </div>
+                        <a href="https://drive.google.com/drive/u/4/folders/1PjoHYijJQ2Gw5b4SHEdJhEwZ2g1X5leT?usp=sharing" target="_blank" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-2xl shadow transition flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-folder-open"></i>
+                            <span>Buka Google Drive</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Preview Ringkasan Laporan -->
+                <div class="bg-gray-50 border border-gray-200 rounded-3xl p-6 space-y-4">
+                    <h3 class="font-bold text-gray-800 text-base flex items-center space-x-2">
+                        <i class="fa-solid fa-file-lines text-emerald-600"></i>
+                        <span>Ringkasan Hasil Aktivitas Siswa</span>
+                    </h3>
+                    <div id="summary-preview" class="bg-white p-4 rounded-2xl text-xs sm:text-sm text-gray-700 border border-gray-200 space-y-2">
+                        <p><strong>Nama Siswa:</strong> <span id="sum-name">- Belum diisi -</span></p>
+                        <p><strong>Kelas:</strong> <span id="sum-class">- Belum diisi -</span></p>
+                        <p><strong>Menu Sarapan:</strong> <span id="sum-breakfast">- Belum diisi -</span></p>
+                        <p><strong>Jajanan Sekolah:</strong> <span id="sum-snack">- Belum diisi -</span></p>
+                        <p><strong>Skor Game Mini:</strong> <span id="sum-game">0</span></p>
+                        <p><strong>Nilai Kuis:</strong> <span id="sum-quiz">0</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-gray-500 space-y-1">
+            <p>Kegiatan Kokurikuler Tema 7: Kebiasaan Anak Indonesia Hebat • Topik Sarapan Bergizi & Jajanan Sehat</p>
+            <p>© 2026 Pendidikan Karakter & Gizi Anak Indonesia</p>
+        </div>
+    </footer>
+
+    <!-- Custom Message Box Modal -->
+    <div id="custom-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center space-y-4 shadow-2xl">
+            <div id="modal-icon" class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 id="modal-title" class="text-xl font-bold text-gray-800">Berhasil!</h3>
+            <p id="modal-message" class="text-sm text-gray-600">Pesan keterangan di sini...</p>
+            <button onclick="closeModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-50', 'text-emerald-700', 'bg-emerald-600', 'text-white', 'shadow-sm');
+                btn.classList.add('text-gray-600', 'hover:text-emerald-600', 'hover:bg-gray-50');
+            });
+
+            const activeBtn = document.querySelector(`[data-tab="${tabId}"]`);
+            if (activeBtn) {
+                if (tabId === 'kirim') {
+                    activeBtn.classList.add('bg-emerald-600', 'text-white', 'shadow-sm');
+                    activeBtn.classList.remove('text-gray-600', 'hover:bg-gray-50');
+                } else {
+                    activeBtn.classList.add('bg-emerald-50', 'text-emerald-700');
+                    activeBtn.classList.remove('text-gray-600', 'hover:bg-gray-50');
+                }
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Modal Function
+        function showModal(title, message, isSuccess = true) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            const iconDiv = document.getElementById('modal-icon');
+            if(isSuccess) {
+                iconDiv.className = "w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto";
+                iconDiv.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            } else {
+                iconDiv.className = "w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center text-3xl mx-auto";
+                iconDiv.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+            }
+            document.getElementById('custom-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
+
+        // User Task Data Storage
+        let userData = {
+            name: "",
+            class: "",
+            breakfast: "",
+            snack: "",
+            reflection: "",
+            gameScore: 0,
+            quizScore: 0
+        };
+
+        function saveTaskData() {
+            userData.name = document.getElementById('student-name').value.trim();
+            userData.class = document.getElementById('student-class').value.trim();
+            userData.breakfast = document.getElementById('task-breakfast').value.trim();
+            userData.snack = document.getElementById('task-snack').value.trim();
+            userData.reflection = document.getElementById('task-reflection').value.trim();
+
+            if(!userData.name || !userData.class || !userData.breakfast || !userData.snack) {
+                showModal("Perhatian", "Mohon lengkapi semua data formulir tugas terlebih dahulu!", false);
+                return;
+            }
+
+            document.getElementById('task-success-msg').classList.remove('hidden');
+            updateSummaryPreview();
+            showModal("Berhasil Disimpan", "Lembar tugas rumah berhasil disimpan ke sistem web kokurikuler!");
+        }
+
+        function updateSummaryPreview() {
+            document.getElementById('sum-name').innerText = userData.name || '- Belum diisi -';
+            document.getElementById('sum-class').innerText = userData.class || '- Belum diisi -';
+            document.getElementById('sum-breakfast').innerText = userData.breakfast || '- Belum diisi -';
+            document.getElementById('sum-snack').innerText = userData.snack || '- Belum diisi -';
+            document.getElementById('sum-game').innerText = userData.gameScore;
+            document.getElementById('sum-quiz').innerText = userData.quizScore;
+        }
+
+        function printTaskReport() {
+            window.print();
+        }
+
+        // Game Mini Logic
+        const gameItems = [
+            { emoji: "🍎", name: "Apel Segar Organik", desc: "Buah kaya vitamin C dan serat alami.", type: "sehat" },
+            { emoji: "🍭", name: "Permen Berwarna Mencolok", desc: "Mengandung pemanis buatan dan pewarna tekstil berbahaya.", type: "tidak_sehat" },
+            { emoji: "🥛", name: "Susu Sapi Segar Hangat", desc: "Sumber kalsium tinggi untuk kekuatan tulang dan gigi.", type: "sehat" },
+            { emoji: "🥟", name: "Cilok Kuah Berformalin", desc: "Mengandung bahan pengawet berbahaya bagi pencernaan.", type: "tidak_sehat" },
+            { emoji: "🥚", name: "Telur Rebus Setengah Matang", desc: "Sumber protein hewani berkualitas tinggi untuk otak.", type: "sehat" },
+            { emoji: "🥤", name: "Minuman Sachet Berpemanis Buatan", desc: "Tinggi gula buatan dan aditif kimia tanpa nutrisi.", type: "tidak_sehat" }
+        ];
+
+        let currentGameIndex = 0;
+        let gameScore = 0;
+
+        function loadGameItem() {
+            if (currentGameIndex < gameItems.length) {
+                let item = gameItems[currentGameIndex];
+                document.getElementById('game-item-emoji').innerText = item.emoji;
+                document.getElementById('game-item-name').innerText = item.name;
+                document.getElementById('game-item-desc').innerText = item.desc;
+                document.getElementById('game-feedback').innerText = "";
+            } else {
+                document.getElementById('game-arena').classList.add('hidden');
+                document.getElementById('game-completed').classList.remove('hidden');
+                document.getElementById('final-game-score').innerText = gameScore;
+                userData.gameScore = gameScore;
+                updateSummaryPreview();
+            }
+        }
+
+        function checkGameAnswer(answer) {
+            let item = gameItems[currentGameIndex];
+            let feedbackEl = document.getElementById('game-feedback');
+            if (answer === item.type) {
+                gameScore += 10;
+                document.getElementById('game-score').innerText = gameScore;
+                feedbackEl.innerHTML = '<span class="text-emerald-600"><i class="fa-solid fa-circle-check mr-1"></i> Benar sekali! Hebat!</span>';
+            } else {
+                feedbackEl.innerHTML = '<span class="text-rose-600"><i class="fa-solid fa-circle-xmark mr-1"></i> Kurang tepat! Makanan ini termasuk kategori ' + (item.type === 'sehat' ? 'Sehat' : 'Tidak Sehat') + '.</span>';
+            }
+            currentGameIndex++;
+            setTimeout(loadGameItem, 1500);
+        }
+
+        function resetGame() {
+            currentGameIndex = 0;
+            gameScore = 0;
+            document.getElementById('game-score').innerText = gameScore;
+            document.getElementById('game-arena').classList.remove('hidden');
+            document.getElementById('game-completed').classList.add('hidden');
+            loadGameItem();
+        }
+
+        // Quiz Logic
+        const quizData = [
+            {
+                question: "Apa manfaat utama sarapan pagi bagi anak sekolah?",
+                options: [
+                    "Agar cepat mengantuk di kelas",
+                    "Memberi energi dan meningkatkan konsentrasi belajar",
+                    "Supaya bisa jajan lebih banyak di kantin",
+                    "Agar berat badan cepat bertambah drastis"
+                ],
+                answer: 1,
+                explanation: "Benar! Sarapan memberi glukosa dan energi yang dibutuhkan otak untuk fokus dan berkonsentrasi belajar di sekolah."
+            },
+            {
+                question: "Manakah di bawah ini yang merupakan ciri jajanan sehat?",
+                options: [
+                    "Warna makanan sangat mencolok dan menyala terang",
+                    "Dibungkus terbuka di pinggir jalan yang berdebu",
+                    "Higienis, tertutup, berwarna alami, dan bernutrisi seimbang",
+                    "Rasanya sangat gurih berlebihan karena penyedap kimia"
+                ],
+                answer: 2,
+                explanation: "Benar! Jajanan sehat harus higienis, bersih, terlindung dari debu, dan bernutrisi seimbang."
+            },
+            {
+                question: "Bahan kimia berbahaya yang sering disalahgunakan untuk mengawetkan tahu atau mie basah adalah...",
+                options: ["Formalin", "Garam dapur", "Gula aren", "Minyak zaitun"],
+                answer: 0,
+                explanation: "Benar! Formalin adalah cairan pengawet mayat yang sangat berbahaya jika masuk ke dalam tubuh makanan."
+            },
+            {
+                question: "Apa dampak jangka panjang jika anak sering mengonsumsi jajanan tidak sehat berzat aditif berbahaya?",
+                options: [
+                    "Tubuh semakin kuat dan cerdas",
+                    "Gangguan pencernaan, kerusakan ginjal, dan risiko kanker",
+                    "Semangat berolahraga setiap hari",
+                    "Pertumbuhan tinggi badan meningkat cepat"
+                ],
+                answer: 1,
+                explanation: "Benar! Zat aditif berbahaya seperti boraks dan formalin dapat merusak organ tubuh bagian dalam jangka panjang."
+            },
+            {
+                question: "Di manakah link arsip materi dan lembar tugas kokurikuler Tema 7 ini disimpan?",
+                options: [
+                    "Di dalam Flashdisk hilang",
+                    "Di Google Drive kelas resmi",
+                    "Di perpustakaan kota",
+                    "Di buku tulis catatan harian"
+                ],
+                answer: 1,
+                explanation: "Benar! Seluruh materi dan tugas disimpan di folder Google Drive kelas."
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+
+        function loadQuizQuestion() {
+            if (currentQuizIndex < quizData.length) {
+                let q = quizData[currentQuizIndex];
+                document.getElementById('current-question-num').innerText = currentQuizIndex + 1;
+                document.getElementById('quiz-question-text').innerText = q.question;
+                document.getElementById('quiz-live-score').innerText = quizScore;
+
+                let optionsHtml = '';
+                q.options.forEach((opt, idx) => {
+                    optionsHtml += `<button onclick="selectQuizOption(${idx})" class="quiz-option-btn w-full text-left p-4 rounded-xl border border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 font-medium text-sm transition flex items-center space-x-3">
+                        <span class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center font-bold text-gray-700 flex-shrink-0">${String.fromCharCode(65 + idx)}</span>
+                        <span>${opt}</span>
+                    </button>`;
+                });
+                document.getElementById('quiz-options').innerHTML = optionsHtml;
+                document.getElementById('quiz-explanation').classList.add('hidden');
+                document.getElementById('next-quiz-btn').classList.add('hidden');
+            } else {
+                document.getElementById('quiz-container').classList.add('hidden');
+                document.getElementById('quiz-result').classList.remove('hidden');
+                document.getElementById('final-quiz-score').innerText = quizScore;
+                userData.quizScore = quizScore;
+                updateSummaryPreview();
+            }
+        }
+
+        function selectQuizOption(selectedIndex) {
+            let q = quizData[currentQuizIndex];
+            let optionBtns = document.querySelectorAll('.quiz-option-btn');
+            
+            // Disable all buttons after choice
+            optionBtns.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.answer) {
+                    btn.classList.remove('border-gray-200', 'hover:bg-emerald-50');
+                    btn.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+                } else if (idx === selectedIndex) {
+                    btn.classList.remove('border-gray-200', 'hover:bg-emerald-50');
+                    btn.classList.add('bg-rose-100', 'border-rose-500', 'text-rose-900');
+                }
+            });
+
+            let explanationEl = document.getElementById('quiz-explanation');
+            explanationEl.classList.remove('hidden');
+
+            if (selectedIndex === q.answer) {
+                quizScore += 20;
+                document.getElementById('quiz-live-score').innerText = quizScore;
+                explanationEl.className = "p-4 rounded-xl text-xs sm:text-sm font-medium bg-emerald-100 text-emerald-800 border border-emerald-300";
+                explanationEl.innerHTML = '<i class="fa-solid fa-circle-check mr-1"></i> <strong>Jawaban Benar!</strong> ' + q.explanation;
+            } else {
+                explanationEl.className = "p-4 rounded-xl text-xs sm:text-sm font-medium bg-rose-100 text-rose-800 border border-rose-300";
+                explanationEl.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1"></i> <strong>Jawaban Kurang Tepat.</strong> ' + q.explanation;
+            }
+
+            document.getElementById('next-quiz-btn').classList.remove('hidden');
+        }
+
+        function nextQuizQuestion() {
+            currentQuizIndex++;
+            loadQuizQuestion();
+        }
+
+        function resetQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            document.getElementById('quiz-container').classList.remove('hidden');
+            document.getElementById('quiz-result').classList.add('hidden');
+            loadQuizQuestion();
+        }
+
+        // WhatsApp Sending Logic
+        function sendToWhatsApp() {
+            let name = userData.name || document.getElementById('student-name').value.trim() || "Siswa";
+            let sClass = userData.class || document.getElementById('student-class').value.trim() || "-";
+            let breakfast = userData.breakfast || document.getElementById('task-breakfast').value.trim() || "-";
+            let snack = userData.snack || document.getElementById('task-snack').value.trim() || "-";
+            let gScore = userData.gameScore;
+            let qScore = userData.quizScore;
+
+            let message = `*LAPORAN KEGIATAN KOKURIKULER TEMA 7*%0A` +
+                          `*Kebiasaan Anak Indonesia Hebat (Sarapan Bergizi)*%0A%0A` +
+                          `👤 *Nama:* ${name}%0A` +
+                          `🏫 *Kelas:* ${sClass}%0A` +
+                          `🥣 *Menu Sarapan:* ${breakfast}%0A` +
+                          `🍎 *Jajanan Sehat:* ${snack}%0A` +
+                          `🎮 *Skor Game Mini:* ${gScore}/50%0A` +
+                          `📝 *Nilai Kuis:* ${qScore}/100%0A%0A` +
+                          `📁 *Google Drive:* https://drive.google.com/drive/u/4/folders/1PjoHYijJQ2Gw5b4SHEdJhEwZ2g1X5leT?usp=sharing%0A%0A` +
+                          `Terima kasih bapak/ibu guru!`;
+
+            let waUrl = `https://wa.me/6281373363236?text=${message}`;
+            window.open(waUrl, '_blank');
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            loadGameItem();
+            loadQuizQuestion();
+        }
+    </script>
+</body>
+</html>
